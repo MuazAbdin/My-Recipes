@@ -8,8 +8,9 @@ import morgan from "morgan";
 import router from "./router.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use("/static", express.static(path.resolve(__dirname, "./dist")));
-app.use("/static", express.static(path.resolve(__dirname, "./node_modules")));
+
+app.use("/public", express.static(path.resolve(__dirname, "./dist")));
+app.use("/public", express.static(path.resolve(__dirname, "./node_modules")));
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));

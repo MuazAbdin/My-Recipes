@@ -3,7 +3,91 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./@fortawesome/fontawesome-free/css/all.css" />
+    <script src="./jquery/dist/jquery.js" defer></script>
+    <script src="./handlebars/dist/handlebars.js" defer></script>
+    <script src="CONFIG.js" defer></script>
+    <script src="APIManager.js" defer></script>
+    <script src="Renderer.js" defer></script>
+    <script src="main.js" defer></script>
     <title>My Recipes</title>
   </head>
-  <body></body>
+  <body>
+    <header class="body-header">
+      <div class="logo">
+        <img src="./assets/logo.png" alt="Recipes Logo" />
+      </div>
+      <h2 class="main-title">My Recipes</h2>
+    </header>
+    <main>
+      <div class="search-controller">
+        <input
+          type="text"
+          id="ingredient-input"
+          name="ingredient"
+          placeholder="Insert an ingredient"
+        />
+        <div class="filters-list" onclick="toggleFiltersList(this)">
+          <i class="fa-solid fa-angles-down"></i>
+          &nbsp; Recipe Filters
+          <article class="filter-options"></article>
+        </div>
+        <button onclick="showResults()">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+      <article class="recipes-card-deck">
+        <!-- <h3>NO Recipes</h3> -->
+        <img src="./assets/logo.png" alt="Recipes Logo" />
+      </article>
+    </main>
+    <footer class="body-footer">Designed by: Muaz Abdin</footer>
+
+    <!-- HANDLEBARS TEMPLATES -->
+    <script type="text/x-handlebars-template" id="recipe-template">
+      {{#each recipes}}
+        <article id="{{this.idMeal}}" class="recipe-card">
+          <a href="{{this.href}}" class="recipe-title" target="_blank">{{this.title}}</a>
+          <div
+            class="recipe-img"
+            onclick="alretIngredient('{{this.ingredients.[0].[0]}}')"
+          >
+            <img src="{{this.thumbnail}}" alt="recipe" />
+          </div>
+          <article class="ingredients">
+            <h6 class="ingredients-title">Ingredients</h6>
+            <div style="display: flex; gap: 2.5rem; padding-left: 1rem">
+              {{#each this.ingredients}}
+                <ul>
+                  {{#each this}}
+                    <li>{{this}}</li>
+                  {{/each}}
+                </ul>
+              {{/each}}
+            </div>
+          </article>
+        </article>
+      {{/each}}
+    </script>
+
+    <script type="text/x-handlebars-template" id="options-template">
+      {{#each filters}}
+        <section class="options-group">
+          <h5 class="options-group__title">{{title}}</h5>
+          <ul>
+            {{#each options}}
+              <li id="{{toLowerCase ../title this }}" class="option-item">
+                <i class="fa-regular fa-square"></i>
+                &nbsp;
+                {{this}}
+              </li>
+            {{/each}}
+          </ul>
+        </section>
+      {{/each}}
+    </script>
+    <!-- #################### -->
+  </body>
 </html>
