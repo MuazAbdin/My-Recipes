@@ -165,7 +165,16 @@ main {
   position: relative;
 }
 
-.recipes-card-deck > h3 {
+.recipes-count {
+  position: absolute;
+  /* transform: translate(-50%, -50%); */
+  top: -3.5rem;
+  left: 1rem;
+  font-family: var(--main-font);
+  font-size: 1.75rem;
+  color: var(--tigers-eye);
+}
+/* .recipes-card-deck > h3 {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 50%;
@@ -174,7 +183,7 @@ main {
   font-size: 2rem;
   color: var(--brown-600);
   text-shadow: 2px 2px 2px black;
-}
+} */
 
 .recipes-card-deck > img {
   height: 15rem;

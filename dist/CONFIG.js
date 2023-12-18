@@ -21,4 +21,5 @@ const config = {
       ],
     },
   ],
+  ingredientsColumns: 3,
 };

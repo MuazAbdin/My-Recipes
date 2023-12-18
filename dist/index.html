@@ -47,6 +47,7 @@
 
     <!-- HANDLEBARS TEMPLATES -->
     <script type="text/x-handlebars-template" id="recipe-template">
+      <div class="recipes-count"><b>{{recipes.length}}</b> recipe(s) found</div>
       {{#each recipes}}
         <article id="{{this.idMeal}}" class="recipe-card">
           <a href="{{this.href}}" class="recipe-title" target="_blank">{{this.title}}</a>
@@ -69,6 +70,8 @@
             </div>
           </article>
         </article>
+      {{else}}
+        <img src="./assets/logo.png" alt="Recipes Logo" />
       {{/each}}
     </script>
 

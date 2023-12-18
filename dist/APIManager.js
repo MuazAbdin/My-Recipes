@@ -8,7 +8,10 @@ class APIManager {
 
   /* Private methods */
   static #sliceArray(array, sliceSize = 5) {
-    sliceSize = array.length > 15 ? Math.ceil(array.length / 3) : sliceSize;
+    sliceSize =
+      array.length > config.ingredientsColumns * sliceSize
+        ? Math.ceil(array.length / config.ingredientsColumns)
+        : sliceSize;
     let endIdx = sliceSize;
     const slicedArray = [];
     for (let i = 0; i < array.length; i += sliceSize, endIdx += sliceSize)
@@ -18,10 +21,11 @@ class APIManager {
 
   /* Public Methods - API */
   async loadData(ingredient, filters) {
+    const url = `${config.apiEndpoint}/recipes/${ingredient}`;
     try {
       // console.log(filters);
       this.#data = await $.ajax({
-        url: `${config.apiEndpoint}/recipes/${ingredient}`,
+        url: url,
         method: "GET",
         data: filters,
       });
@@ -30,7 +34,9 @@ class APIManager {
           (recipe.ingredients = APIManager.#sliceArray(recipe.ingredients))
       );
     } catch (error) {
-      console.log(error);
+      console.log(`${url} ${error.status} (${error.statusText})`);
+      // alert(`${url} ${error.status} (${error.statusText})`);
+      throw new Error(`${url} ${error.status} (${error.statusText})`);
     }
   }
 

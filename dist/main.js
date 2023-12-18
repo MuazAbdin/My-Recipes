@@ -48,10 +48,8 @@ function getCheckedFilters() {
 async function showResults() {
   const ingredient = $("#ingredient-input").val();
   const checkedFilters = getCheckedFilters();
-  // console.log(checkedFilters);
-  await apiManager.loadData(ingredient, checkedFilters);
-  // console.log(apiManager.data);
   $("#ingredient-input").val("");
+  await apiManager.loadData(ingredient, checkedFilters);
   renderer.render(apiManager.data);
 }
 
