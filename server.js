@@ -5,7 +5,7 @@ const app = express();
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
-import router from "./router.js";
+import router from "./routes/api/router.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
