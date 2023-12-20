@@ -1,7 +1,7 @@
 const config = {
   apiEndpoint: "http://localhost:5100",
   filters: [
-    { title: "SENSITIVITY", options: ["Diary", "Gluten"] },
+    { title: "SENSITIVITY", options: ["Dairy", "Gluten"] },
     {
       title: "TYPE",
       options: ["Seafood", "Dessert", "Beef", "Vegetarian", "Chicken"],

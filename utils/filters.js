@@ -1,20 +1,23 @@
-import { dairyIngredients, glutenIngredients } from "./constants.js";
+import { sensitivitiesIngredients } from "./constants.js";
 
-const checkIntersection = (arr1, arr2) => {
-  return (
-    arr1.filter(
-      (word) => arr2.filter((sentence) => sentence.includes(word)).length === 0
-    ).length === 0
-  );
+const isIntersected = (recipeIngs, sensIngs) => {
+  return sensIngs.filter((ing) => recipeIngs.includes(ing)).length > 0;
+  // return (
+  //   sensIngs.filter(
+  //     (word) =>
+  //       recipeIngs.filter((sentence) => sentence.includes(word)).length > 0
+  //   ).length > 0
+  // );
 };
 
 const passSensitivityFilter = (recipe, options = []) => {
   let pass = true;
-  if (pass && options.includes("diary")) {
-    pass = checkIntersection(recipe.ingredients, dairyIngredients);
-  }
-  if (pass && options.includes("gluten")) {
-    pass = checkIntersection(recipe.ingredients, glutenIngredients);
+  for (let option of options) {
+    if (!pass) break;
+    pass = !isIntersected(
+      recipe.ingredients.map((ing) => ing.toLowerCase()),
+      sensitivitiesIngredients[option].map((ing) => ing.toLowerCase())
+    );
   }
   return pass;
 };

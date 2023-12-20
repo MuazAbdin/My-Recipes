@@ -4,7 +4,7 @@ const router = Router();
 import { RecipesAPIEndpoint } from "../../utils/constants.js";
 import extractRecipes from "../../utils/filters.js";
 
-router.get("/recipes/:name", async (req, res) => {
+router.get("/:name", async (req, res) => {
   try {
     const name = req.params.name;
     const filters = req.query;

@@ -5,7 +5,7 @@ const app = express();
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
-import router from "./routes/api/router.js";
+import recipesRouter from "./routes/api/router.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === "development") {
 }
 app.use(express.json());
 
-app.use("/", router);
+app.use("/recipes", recipesRouter);
 
 app.use((err, req, res, next) => {
   console.log(err);
