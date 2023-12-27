@@ -4,26 +4,6 @@ const router = Router();
 import { RecipesAPIEndpoint, allRecipes } from "../../utils/constants.js";
 import extractRecipes from "../../utils/filters.js";
 
-router.get("/", async (req, res) => {
-  try {
-    const filters = req.query;
-    let results = [];
-    for (let id of allRecipes.IDs) {
-      const result = (
-        await axios.get(
-          `https://recipes-goodness-elevation.herokuapp.com/recipes/id/${id}`
-        )
-      ).data;
-      results.push(result);
-    }
-    const recipes = extractRecipes(results, filters);
-    res.status(200).send(recipes);
-  } catch (error) {
-    console.log(error.message);
-    res.status(error.statusCode).send({ messgae: error.message });
-  }
-});
-
 router.get("/:name", async (req, res) => {
   try {
     const name = req.params.name;
