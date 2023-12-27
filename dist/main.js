@@ -2,6 +2,13 @@ const apiManager = new APIManager();
 const renderer = new Renderer();
 renderer.renderOptions();
 let curPage = 1;
+const kitchen = [];
+
+function addRecipeToKitchen(idMeal) {
+  if (kitchen.includes(idMeal)) return;
+  kitchen.push(idMeal);
+  renderer.renderKitchenSize(kitchen.length);
+}
 
 function toggleFiltersList(element) {
   const icon = $(element || ".filters-list").find(">i");

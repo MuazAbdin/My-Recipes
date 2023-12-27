@@ -20,10 +20,12 @@
         <img src="./assets/logo.png" alt="Recipes Logo" />
       </div>
       <h2 class="main-title">My Recipes</h2>
-      <div class="kitchen">
+      <div class="my-kitchen">
         <!-- <span>My</span> -->
         <img src="./assets/kitchen.png" alt="kitchen">
-        <span>My Kitchen</span>
+        <span>My Kitchen
+          <span class="kitchen-size">0</spa>
+        </span>
       </div>
     </header>
     <main>
@@ -98,13 +100,13 @@
             </div>
           </article>
           <div class="interactive-btns">
-            <button class="btn send-mail">
+            <button class="btn send-email">
               <i class="fa-solid fa-envelope"></i>
               <a href="mailto:?subject={{{email.subject}}}&body={{{email.body}}}">Send Recipe</a>
             </button>
-            <button class="btn add-recipe">
+            <button class="btn add-recipe" onclick="addRecipeToKitchen('{{this.idMeal}}')">
               <i class="fa-solid fa-file-circle-plus"></i>
-              Add Recipe
+              Add to My Kitchen
             </button>
           </div>
         </article>

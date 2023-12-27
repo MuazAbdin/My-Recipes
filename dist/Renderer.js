@@ -51,4 +51,8 @@ class Renderer {
       this.#optionsTemplate({ filters: config.filters })
     );
   }
+
+  renderKitchenSize(size) {
+    $(".kitchen-size")[0].innerText = size;
+  }
 }

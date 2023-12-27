@@ -21,6 +21,7 @@ router.get("/", async (req, res) => {
         `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}&q=food&limit=${results.length}`
       )
     ).data;
+    // const data = [];
     const { recipes, count } = extractRecipes(results, filters, page, data);
     res.status(200).send({ recipes, count });
   } catch (error) {
@@ -41,6 +42,7 @@ router.get("/:name", async (req, res) => {
         `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}&q=food&limit=${results.length}`
       )
     ).data;
+    // const data = [];
     const { recipes, count } = extractRecipes(results, filters, page, data);
     res.status(200).send({ recipes, count });
   } catch (error) {

@@ -57,7 +57,7 @@ const extractRecipes = (results, filters, page, gifs) => {
         title: recipe.title,
         ingredients: recipe.ingredients,
         // thumbnail: recipe.thumbnail,
-        thumbnail: gifs[idx].embed_url,
+        thumbnail: gifs[idx]?.embed_url || recipe.thumbnail,
         href: recipe.href,
         chef: faker.person.fullName(),
         rating: generateRating(),
