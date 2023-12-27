@@ -95,7 +95,7 @@ async function showResults(isNewSearch) {
   const checkedFilters = getCheckedFilters();
   toggleFiltersList(null);
 
-  const page = getPageDetails();
+  const page = getPageDetails(isNewSearch);
   await apiManager.loadData(ingredient, checkedFilters, page);
 
   const totalPages = getTotalPages();
