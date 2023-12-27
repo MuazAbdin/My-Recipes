@@ -1,4 +1,11 @@
 import { sensitivitiesIngredients } from "./constants.js";
+import { faker } from "@faker-js/faker";
+
+const RATING_INTERVAL = [0, 5];
+
+const generateRating = () => {
+  return Math.floor(Math.random() * RATING_INTERVAL[1]) + RATING_INTERVAL[0];
+};
 
 const isIntersected = (recipeIngs, sensIngs) => {
   return sensIngs.filter((ing) => recipeIngs.includes(ing)).length > 0;
@@ -40,18 +47,26 @@ const passAllFilters = (recipe, filters) => {
   );
 };
 
-const extractRecipes = (results, filters) => {
-  return results
+const extractRecipes = (results, filters, page, gifs) => {
+  if (!filters) filters = {};
+  let recipes = results
     .filter((recipe) => passAllFilters(recipe, filters))
-    .map((recipe) => {
+    .map((recipe, idx) => {
       return {
         idMeal: recipe.idMeal,
         title: recipe.title,
         ingredients: recipe.ingredients,
-        thumbnail: recipe.thumbnail,
+        // thumbnail: recipe.thumbnail,
+        thumbnail: gifs[idx].embed_url,
         href: recipe.href,
+        chef: faker.person.fullName(),
+        rating: generateRating(),
       };
     });
+  return {
+    recipes: recipes.slice(page.offset, page.limit),
+    count: recipes.length,
+  };
 };
 
 export default extractRecipes;

@@ -20,42 +20,73 @@
         <img src="./assets/logo.png" alt="Recipes Logo" />
       </div>
       <h2 class="main-title">My Recipes</h2>
+      <div class="kitchen">
+        <!-- <span>My</span> -->
+        <img src="./assets/kitchen.png" alt="kitchen">
+        <span>My Kitchen</span>
+      </div>
     </header>
     <main>
       <div class="search-controller">
+        <div class="filters-list" onclick="toggleFiltersList(this)">
+          <i class="fa-solid fa-angles-down"></i>
+          <article class="filter-options"></article>
+        </div>
         <input
           type="text"
           id="ingredient-input"
           name="ingredient"
-          placeholder="Insert an ingredient"
+          placeholder="Ingredient"
         />
-        <div class="filters-list" onclick="toggleFiltersList(this)">
-          <i class="fa-solid fa-angles-down"></i>
-          &nbsp; Recipe Filters
-          <article class="filter-options"></article>
-        </div>
-        <button onclick="showResults()">
+        <button onclick="showResults(true)">
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </div>
-      <article class="recipes-card-deck">
-        <!-- <h3>NO Recipes</h3> -->
-        <img src="./assets/logo.png" alt="Recipes Logo" />
-      </article>
+      <div class="recipes-container">
+        <div class="pagination"></div>
+        <article class="recipes-card-deck">
+          <!-- <h3>NO Recipes</h3> -->
+          <img src="./assets/logo.png" alt="Recipes Logo" />
+        </article>
+      </div>
     </main>
     <footer class="body-footer">Designed by: Muaz Abdin</footer>
 
     <!-- HANDLEBARS TEMPLATES -->
+    <script type="text/x-handlebars-template" id="pagination-template">
+      <div class="recipes-count"><b>{{count}}</b> recipe(s) found</div>
+      <button class="btn page-left" onclick="goLeft()"><i class="fa-solid fa-angles-left"></i></button>
+      {{#times 1 pages}}
+        <button class="btn page-num-btn" data-active="{{isCurPage this ../curPage}}">{{this}}</button>
+      {{/times}}
+      <button class="btn page-right" onclick="goRight()"><i class="fa-solid fa-angles-right"></i></button>
+    </script>
+
     <script type="text/x-handlebars-template" id="recipe-template">
-      <div class="recipes-count"><b>{{recipes.length}}</b> recipe(s) found</div>
       {{#each recipes}}
         <article id="{{this.idMeal}}" class="recipe-card">
           <a href="{{this.href}}" class="recipe-title" target="_blank">{{this.title}}</a>
           <div
             class="recipe-img"
-            onclick="alretIngredient('{{this.ingredients.[0].[0]}}')"
+            onclick="alert('{{this.ingredients.[0].[0]}}')"
           >
-            <img src="{{this.thumbnail}}" alt="recipe" />
+            <!-- <img src="{{this.thumbnail}}" alt="recipe" /> -->
+            <iframe src="{{this.thumbnail}}" frameborder="0"></iframe>
+          </div>
+          <!-- <div class="add-recipe">
+            <img src="./assets/add-recipe.svg" alt="add recipe">
+          </div> -->
+          <div class="chef">
+            <img src="./assets/chef.svg" alt="chef">
+            <span>{{chef}}</span>
+          </div>
+          <div class="rating">
+            {{#times 0 rating}}
+              <i class="fa-solid fa-star"></i>
+            {{/times}}
+            {{#times rating 5}}
+              <i class="fa-regular fa-star"></i>
+            {{/times}}
           </div>
           <article class="ingredients">
             <h6 class="ingredients-title">Ingredients</h6>
@@ -69,6 +100,16 @@
               {{/each}}
             </div>
           </article>
+          <div class="interactive-btns">
+            <button class="btn send-mail">
+              <i class="fa-solid fa-envelope"></i>
+              <a href="mailto:?subject={{{email.subject}}}&body={{{email.body}}}">Send Recipe</a>
+            </button>
+            <button class="btn add-recipe">
+              <i class="fa-solid fa-file-circle-plus"></i>
+              Add Recipe
+            </button>
+          </div>
         </article>
       {{else}}
         <img src="./assets/logo.png" alt="Recipes Logo" />
@@ -81,7 +122,7 @@
           <h5 class="options-group__title">{{title}}</h5>
           <ul>
             {{#each options}}
-              <li id="{{toLowerCase ../title this }}" class="option-item">
+              <li id="{{genOptionID ../title this }}" class="option-item">
                 <i class="fa-regular fa-square"></i>
                 &nbsp;
                 {{this}}

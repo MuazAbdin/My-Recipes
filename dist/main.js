@@ -1,10 +1,11 @@
 const apiManager = new APIManager();
 const renderer = new Renderer();
 renderer.renderOptions();
+let curPage = 1;
 
 function toggleFiltersList(element) {
-  const icon = $(element).find(">i");
-  if (icon.hasClass("fa-angles-down")) {
+  const icon = $(element || ".filters-list").find(">i");
+  if (element && icon.hasClass("fa-angles-down")) {
     icon.removeClass("fa-angles-down");
     icon.addClass("fa-angles-up");
     $(".filter-options").show();
@@ -45,14 +46,47 @@ function getCheckedFilters() {
   return checkedFilters;
 }
 
-async function showResults() {
-  const ingredient = $("#ingredient-input").val();
-  const checkedFilters = getCheckedFilters();
-  $("#ingredient-input").val("");
-  await apiManager.loadData(ingredient, checkedFilters);
-  renderer.render(apiManager.data);
+$(".pagination").on("click", ".page-num-btn", function () {
+  curPage = parseInt(this.innerText);
+  // [...$(".page-num-btn")].forEach((btn) => {
+  //   // $(btn).data("active", "true");
+  //   console.log($(btn).data().active);
+  //   $(btn).data().active = this === btn;
+  //   console.log($(btn).data().active);
+  // });
+  showResults(false);
+});
+
+function goLeft() {
+  if ($(this).disable) return;
+  curPage--;
+  showResults(false);
 }
 
-function alretIngredient(ingredient) {
-  alert(ingredient);
+function goRight() {
+  if ($(this).disable) return;
+  curPage++;
+  showResults(false);
+}
+
+async function showResults(isNewSearch) {
+  const ingredient = $("#ingredient-input").val();
+  const checkedFilters = getCheckedFilters();
+  // $("#ingredient-input").val("");
+  toggleFiltersList(null);
+  if (isNewSearch) curPage = 1;
+  offset = (curPage - 1) * config.itemsPerPage;
+  limit = offset + config.itemsPerPage;
+  const page = { offset, limit };
+  await apiManager.loadData(ingredient, checkedFilters, page);
+  const pages = Math.ceil(apiManager.data.count / config.itemsPerPage);
+  // console.log(curPage);
+  renderer.render(apiManager.data, pages + 1, curPage);
+
+  const goLeftBtn = $(".page-left");
+  const goRightBtn = $(".page-right");
+  if (curPage == 1) goLeftBtn.prop("disabled", true);
+  else goLeftBtn.prop("disabled", false);
+  if (curPage == pages) goRightBtn.prop("disabled", true);
+  else goRightBtn.prop("disabled", false);
 }

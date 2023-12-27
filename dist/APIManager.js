@@ -20,19 +20,23 @@ class APIManager {
   }
 
   /* Public Methods - API */
-  async loadData(ingredient, filters) {
+  async loadData(ingredient, filters, page) {
     const url = `${config.apiEndpoint}/recipes/${ingredient}`;
     try {
       // console.log(filters);
       this.#data = await $.ajax({
         url: url,
         method: "GET",
-        data: filters,
+        data: { filters, page },
+        // data: filters,
       });
-      this.#data.forEach(
-        (recipe) =>
-          (recipe.ingredients = APIManager.#sliceArray(recipe.ingredients))
-      );
+      this.#data.recipes.forEach((recipe) => {
+        recipe.ingredients = APIManager.#sliceArray(recipe.ingredients);
+        recipe.email = {
+          subject: encodeURI(`Check out this recipe! ${recipe.title}`),
+          body: encodeURI(`Check out this recipe! ${recipe.href}`),
+        };
+      });
     } catch (error) {
       console.log(`${url} ${error.status} (${error.statusText})`);
       // alert(`${url} ${error.status} (${error.statusText})`);
