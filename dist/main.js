@@ -63,23 +63,36 @@ function goRight() {
   showResults(false);
 }
 
-async function showResults(isNewSearch) {
-  const ingredient = $("#ingredient-input").val();
-  const checkedFilters = getCheckedFilters();
-  // $("#ingredient-input").val("");
-  toggleFiltersList(null);
-  if (isNewSearch) curPage = 1;
-  offset = (curPage - 1) * config.itemsPerPage;
-  limit = offset + config.itemsPerPage;
-  const page = { offset, limit };
-  await apiManager.loadData(ingredient, checkedFilters, page);
-  const pages = Math.ceil(apiManager.data.count / config.itemsPerPage);
-  renderer.render(apiManager.data, pages + 1, curPage);
-
+function checkPaginationBounds() {
   const goLeftBtn = $(".page-left");
   const goRightBtn = $(".page-right");
   if (curPage == 1) goLeftBtn.prop("disabled", true);
   else goLeftBtn.prop("disabled", false);
   if (curPage == pages) goRightBtn.prop("disabled", true);
   else goRightBtn.prop("disabled", false);
+}
+
+function getPageDetails(isNewSearch) {
+  if (isNewSearch) curPage = 1;
+  const offset = (curPage - 1) * config.itemsPerPage;
+  const limit = offset + config.itemsPerPage;
+  return { offset, limit };
+}
+
+function getTotalPages() {
+  return Math.ceil(apiManager.data.count / config.itemsPerPage);
+}
+
+async function showResults(isNewSearch) {
+  const ingredient = $("#ingredient-input").val();
+  const checkedFilters = getCheckedFilters();
+  toggleFiltersList(null);
+
+  const page = getPageDetails();
+  await apiManager.loadData(ingredient, checkedFilters, page);
+
+  const totalPages = getTotalPages();
+  renderer.render(apiManager.data, totalPages + 1, curPage);
+
+  checkPaginationBounds();
 }
