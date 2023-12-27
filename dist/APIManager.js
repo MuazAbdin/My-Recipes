@@ -23,12 +23,10 @@ class APIManager {
   async loadData(ingredient, filters, page) {
     const url = `${config.apiEndpoint}/recipes/${ingredient}`;
     try {
-      // console.log(filters);
       this.#data = await $.ajax({
         url: url,
         method: "GET",
         data: { filters, page },
-        // data: filters,
       });
       this.#data.recipes.forEach((recipe) => {
         recipe.ingredients = APIManager.#sliceArray(recipe.ingredients);
@@ -39,7 +37,6 @@ class APIManager {
       });
     } catch (error) {
       console.log(`${url} ${error.status} (${error.statusText})`);
-      // alert(`${url} ${error.status} (${error.statusText})`);
       throw new Error(`${url} ${error.status} (${error.statusText})`);
     }
   }

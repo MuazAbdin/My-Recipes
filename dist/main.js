@@ -48,12 +48,6 @@ function getCheckedFilters() {
 
 $(".pagination").on("click", ".page-num-btn", function () {
   curPage = parseInt(this.innerText);
-  // [...$(".page-num-btn")].forEach((btn) => {
-  //   // $(btn).data("active", "true");
-  //   console.log($(btn).data().active);
-  //   $(btn).data().active = this === btn;
-  //   console.log($(btn).data().active);
-  // });
   showResults(false);
 });
 
@@ -80,7 +74,6 @@ async function showResults(isNewSearch) {
   const page = { offset, limit };
   await apiManager.loadData(ingredient, checkedFilters, page);
   const pages = Math.ceil(apiManager.data.count / config.itemsPerPage);
-  // console.log(curPage);
   renderer.render(apiManager.data, pages + 1, curPage);
 
   const goLeftBtn = $(".page-left");
