@@ -36,5 +36,5 @@ const config = {
     },
   ],
   ingredientsColumns: 3,
-  itemsPerPage: 4,
+  itemsPerPage: 6,
 };

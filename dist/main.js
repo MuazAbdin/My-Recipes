@@ -63,12 +63,12 @@ function goRight() {
   showResults(false);
 }
 
-function checkPaginationBounds() {
+function checkPaginationBounds(totalPages) {
   const goLeftBtn = $(".page-left");
   const goRightBtn = $(".page-right");
   if (curPage == 1) goLeftBtn.prop("disabled", true);
   else goLeftBtn.prop("disabled", false);
-  if (curPage == pages) goRightBtn.prop("disabled", true);
+  if (curPage == totalPages) goRightBtn.prop("disabled", true);
   else goRightBtn.prop("disabled", false);
 }
 
@@ -94,5 +94,5 @@ async function showResults(isNewSearch) {
   const totalPages = getTotalPages();
   renderer.render(apiManager.data, totalPages + 1, curPage);
 
-  checkPaginationBounds();
+  checkPaginationBounds(totalPages);
 }
