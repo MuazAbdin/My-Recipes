@@ -24,7 +24,7 @@ class Renderer {
     });
 
     Handlebars.registerHelper("times", function (s, e, block) {
-      var accum = "";
+      let accum = "";
       for (let i = s; i < e; ++i) accum += block.fn(i);
       return accum;
     });

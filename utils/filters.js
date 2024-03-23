@@ -17,7 +17,9 @@ const isIntersected = (recipeIngs, sensIngs) => {
   // );
 };
 
-const passSensitivityFilter = (recipe, options = []) => {
+const passSensitivityFilter = (recipe, options = "") => {
+  if (options.length === 0) return true;
+  options = options.split(" ");
   let pass = true;
   for (let option of options) {
     if (!pass) break;
@@ -29,13 +31,15 @@ const passSensitivityFilter = (recipe, options = []) => {
   return pass;
 };
 
-const passTypeFilter = (recipe, options = []) => {
+const passTypeFilter = (recipe, options = "") => {
   if (options.length === 0) return true;
+  options = options.split(" ");
   return options.includes(recipe.strCategory.toLowerCase());
 };
 
-const passOriginFilter = (recipe, options = []) => {
+const passOriginFilter = (recipe, options = "") => {
   if (options.length === 0) return true;
+  options = options.split(" ");
   return options.includes(recipe.strArea.toLowerCase());
 };
 

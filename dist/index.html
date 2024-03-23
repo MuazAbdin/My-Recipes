@@ -32,7 +32,7 @@
       <div class="search-controller">
         <div class="filters-list" onclick="toggleFiltersList(this)">
           <i class="fa-solid fa-angles-down"></i>
-          <article class="filter-options"></article>
+          <article class="filter-options" onclick="event.stopPropagation()"></article>
         </div>
         <input
           type="text"
@@ -57,11 +57,13 @@
     <!-- HANDLEBARS TEMPLATES -->
     <script type="text/x-handlebars-template" id="pagination-template">
       <div class="recipes-count"><b>{{count}}</b> recipe(s) found</div>
-      <button class="btn page-left" onclick="goLeft()"><i class="fa-solid fa-angles-left"></i></button>
-      {{#times 1 pages}}
-        <button class="btn page-num-btn" data-active="{{isCurPage this ../curPage}}">{{this}}</button>
-      {{/times}}
-      <button class="btn page-right" onclick="goRight()"><i class="fa-solid fa-angles-right"></i></button>
+      {{#if count}}
+        <button class="btn page-left" onclick="goLeft()"><i class="fa-solid fa-angles-left"></i></button>
+        {{#times 1 pages}}
+          <button class="btn page-num-btn" data-active="{{isCurPage this ../curPage}}">{{this}}</button>
+        {{/times}}
+        <button class="btn page-right" onclick="goRight()"><i class="fa-solid fa-angles-right"></i></button>
+      {{/if}}
     </script>
 
     <script type="text/x-handlebars-template" id="recipe-template">
@@ -72,8 +74,8 @@
             class="recipe-img"
             onclick="alert('{{this.ingredients.[0].[0]}}')"
           >
-            <!-- <img src="{{this.thumbnail}}" alt="recipe" /> -->
-            <iframe src="{{this.thumbnail}}" frameborder="0"></iframe>
+            <img src="{{this.thumbnail}}" alt="recipe" />
+            <!-- <iframe src="{{this.thumbnail}}" frameborder="0"></iframe> -->
           </div>
           <div class="chef">
             <img src="./assets/chef.svg" alt="chef">

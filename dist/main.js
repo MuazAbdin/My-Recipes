@@ -45,10 +45,13 @@ function getCheckedFilters() {
     })
     .map((f) => f.id.split("-"))
     .forEach(([filterType, option]) => {
-      checkedFilters[filterType] = [
-        ...(checkedFilters[filterType] || []),
-        option,
-      ];
+      checkedFilters[filterType] = `${
+        checkedFilters[filterType] || ""
+      } ${option}`.trim();
+      // checkedFilters[filterType] = [
+      //   ...(checkedFilters[filterType] || []),
+      //   option,
+      // ];
     });
   return checkedFilters;
 }
@@ -75,7 +78,7 @@ function checkPaginationBounds(totalPages) {
   const goRightBtn = $(".page-right");
   if (curPage == 1) goLeftBtn.prop("disabled", true);
   else goLeftBtn.prop("disabled", false);
-  if (curPage == totalPages) goRightBtn.prop("disabled", true);
+  if (curPage >= totalPages) goRightBtn.prop("disabled", true);
   else goRightBtn.prop("disabled", false);
 }
 

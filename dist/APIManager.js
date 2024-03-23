@@ -26,7 +26,7 @@ class APIManager {
       this.#data = await $.ajax({
         url: url,
         method: "GET",
-        data: { filters, page },
+        data: { ...filters, ...page },
       });
       this.#data.recipes.forEach((recipe) => {
         recipe.ingredients = APIManager.#sliceArray(recipe.ingredients);
